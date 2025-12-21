@@ -5,9 +5,12 @@ using UnityEngine;
 public class GameController : BaseController<GameController>
 {
     
+    public Camera camera;
+    
     void Start()
     {
        base.Start();
+       this.camera = Camera.main;
     }
 
     void Awake()
