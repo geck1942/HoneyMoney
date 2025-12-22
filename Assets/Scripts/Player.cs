@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
+    public CharacterController characterController;
+    public float gravity = 9.81f; // value of gravity, negative because it goes downwards
+    private Vector3 velocity; // define velocity as a Vector3 rather than Vector2
 
     public float playerSpeed = 10.0f;
     
@@ -32,11 +35,16 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         this.animator.SetBool("isRunning", this._direction.magnitude > this._runThreshold);
-        this._characterController.Move(_direction * (this.playerSpeed * Time.deltaTime));
+    
         if(this._direction != Vector3.zero)
             this.animator.transform.rotation = Quaternion.LookRotation(this._direction);
+
+        Vector3 finalMove = (this._direction * this.playerSpeed
+                            + Vector3.down * this.gravity)
+                            *  Time.deltaTime;
+        this._characterController.Move(finalMove);
     }
 
     private void SetDirection(Vector2 dir)
