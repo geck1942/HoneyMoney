@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -4394838587320782476}
   m_Layer: 0
   m_Name: Beehive
-  m_TagString: Untagged
+  m_TagString: Beehive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef2dc0a6328b754780b6edce8764fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pollenCapacity: 10
+  processingSpeed: 0.2
+  honeyCapacity: 5
+  processingRatio: 1
+  pollen: 0
+  honey: 0
 --- !u!1001 &8044350691640613360
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -57,4 +57,24 @@ public class Beehive : MonoBehaviour
             return givenQuantity;
         }
     }
+
+    public int GetHoneyProcessingPercent()
+    {
+        if (this.honey >= this.honeyCapacity)
+            return 100;
+        if (this.honey == 0f)
+            return 0;
+        return Mathf.RoundToInt((this.honey - Mathf.Floor(this.honey)) * 100);
+    }
+
+    public int LootHoney(int quantity = 1)
+    {
+        if (this.honey < 1)
+            return 0;
+        if (this.honey < quantity)
+            quantity = Mathf.FloorToInt(this.honey);
+        
+        this.honey -= quantity;
+        return quantity;
+    }
 }

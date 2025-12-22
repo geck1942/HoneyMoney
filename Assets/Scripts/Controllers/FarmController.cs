@@ -19,6 +19,10 @@ public class FarmController : BaseController<FarmController>
             .Select(obj => obj.GetComponent<Flower>())
             .ToList();
 
+        this.hives = GameObject.FindGameObjectsWithTag("Beehive")
+            .Select(obj => obj.GetComponent<Beehive>())
+            .ToList();
+        
         this._random.InitState();
     }
 
