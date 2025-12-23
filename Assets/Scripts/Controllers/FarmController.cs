@@ -10,11 +10,13 @@ public class FarmController : BaseController<FarmController>
     public List<Beehive> hives = new List<Beehive>();
     public List<Bee> bees = new List<Bee>();
     public List<Flower> flowers = new List<Flower>();
+    public Merchant merchant;
+
+    public float HoneyPrice = 1f;
     
     private Random _random =  new Random();
     void Start()
     {
-        base.Start();
         this.flowers = GameObject.FindGameObjectsWithTag("Flower")
             .Select(obj => obj.GetComponent<Flower>())
             .ToList();
@@ -26,10 +28,6 @@ public class FarmController : BaseController<FarmController>
         this._random.InitState();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public Flower FindFlower(float quantity)
     {
@@ -37,4 +35,16 @@ public class FarmController : BaseController<FarmController>
             return null;
         return  flowers[_random.NextInt(flowers.Count)];
     }
+
+    public IEnumerable<IInteractable> GetAllInteractables()
+    {
+        foreach (var hive in this.hives)
+            if(hive != null)
+                yield return hive;
+        
+        if(merchant != null)
+            yield return this.merchant;
+    }
+    
+    
 }

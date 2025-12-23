@@ -2,16 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : BaseController<GameController>
+public class HivesPanel : MonoBehaviour
 {
-    
-    
+    // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    void Awake()
     {
         
     }

@@ -6,22 +6,26 @@ public class PlayerController : BaseController<PlayerController>
 {
     public Player player;
     public Transform proximityRadar;
-    public float proximityDistance = 1f;
+
+    public Inventory Inventory = new Inventory();
     
-    public delegate void ProximityEvent<TInteractable>(TInteractable beehive);
-    public delegate void LootEvent(Beehive beehive, int quantity);
+    public delegate void ProximityEvent(IInteractable target);
+    public delegate void ProximityEvent<TInteractable>(TInteractable target)
+        where TInteractable : IInteractable;
+    public delegate void LootEvent(string resource, float quantity, IInteractable target);
+    public event ProximityEvent OnInteractableReached;
+    public event ProximityEvent OnInteractableLeft;
+    
     public event ProximityEvent<Beehive> OnBeehiveReached;
     public event ProximityEvent<Beehive> OnBeehiveLeft;
     public event LootEvent OnLoot;
     
-    private Beehive _proximityBeehive = null;
+    private IInteractable _activeInteractable = null;
     private Coroutine _lootingCoroutine = null; 
     
     void Start()
     {
-        base.Start();
-        
-        this.OnBeehiveReached +=  this.StartLooting;
+        this.OnBeehiveReached += this.StartLooting;
         this.OnBeehiveLeft += this.StopLooting;
     }
 
@@ -39,44 +43,53 @@ public class PlayerController : BaseController<PlayerController>
     public void FindProximityInteraction()
     {
         float closestSqrDistance =  float.MaxValue;
-        Beehive closestBeehive = null;
-        Beehive lastClosestBeehive = this._proximityBeehive;
+        IInteractable closestInteractable = null;
+        IInteractable lastClosestInteractable = this._activeInteractable;
         
-        foreach (var hive in FarmController.Instance.hives)
+        foreach (var target in FarmController.Instance.GetAllInteractables())
         {
-            float sqrDistance = (hive.transform.position - this.proximityRadar.position).sqrMagnitude;
-            if (sqrDistance < closestSqrDistance)
+            float sqrDistance = (target.Transform.position - this.proximityRadar.position).sqrMagnitude;
+            if (sqrDistance < closestSqrDistance && sqrDistance <= target.InteractionDistance * target.InteractionDistance)
             {
                 closestSqrDistance = sqrDistance;
-                closestBeehive = hive;
+                closestInteractable = target;
             }
         }
 
-        if (closestSqrDistance < this.proximityDistance * this.proximityDistance)
+        if (closestInteractable != null)
         {
-            if (lastClosestBeehive == null)
+            if (lastClosestInteractable == null)
             {
-                this._proximityBeehive = closestBeehive;
-                this.OnBeehiveReached?.Invoke(closestBeehive);
+                this._activeInteractable = closestInteractable;
+                this.OnInteractableReached?.Invoke(closestInteractable);
+                if(closestInteractable is Beehive beehive)
+                    this.OnBeehiveReached?.Invoke(beehive);
             }
-            if (closestBeehive != lastClosestBeehive)
+            if (closestInteractable != lastClosestInteractable)
             {
-                this._proximityBeehive = closestBeehive;
-                this.OnBeehiveLeft?.Invoke(lastClosestBeehive);
-                this.OnBeehiveReached?.Invoke(closestBeehive);
+                this._activeInteractable = closestInteractable;
+                this.OnInteractableLeft?.Invoke(lastClosestInteractable);
+                if(lastClosestInteractable is Beehive beehiveLeft)
+                    this.OnBeehiveLeft?.Invoke(beehiveLeft);
+                this.OnInteractableReached?.Invoke(closestInteractable);
+                if(closestInteractable is Beehive beehiveReached)
+                    this.OnBeehiveReached?.Invoke(beehiveReached);
+                    
                 
             }
         }
-        else if(this._proximityBeehive != null)
+        else if(this._activeInteractable != null)
         {
-            this._proximityBeehive = null;
-            this.OnBeehiveLeft?.Invoke(lastClosestBeehive);
+            this._activeInteractable = null;
+            this.OnInteractableLeft?.Invoke(lastClosestInteractable);
+            if(lastClosestInteractable is Beehive beehiveLeft)
+                this.OnBeehiveLeft?.Invoke(beehiveLeft);
         }
     }
 
     public void StartLooting(Beehive beehive)
     {
-        this._lootingCoroutine = StartCoroutine(this.Loot(beehive));
+        this._lootingCoroutine = StartCoroutine(this.LootBeehiveAsync(beehive));
     }
 
     public void StopLooting(Beehive beehive)
@@ -84,14 +97,28 @@ public class PlayerController : BaseController<PlayerController>
         StopCoroutine(this._lootingCoroutine);
     }
 
-    IEnumerator Loot(Beehive beehive)
+    public void Loot(string resource, float quantity, Beehive beehive = null)
+    {
+        switch (resource)
+        {
+            case "money":
+                this.Inventory.Money += quantity;
+                break;
+            case "honey":
+                this.Inventory.Honey +=  quantity;
+                break;
+        }
+        this.OnLoot.Invoke(resource, quantity,  beehive);
+    }
+
+    IEnumerator LootBeehiveAsync(Beehive beehive)
     {
         int looted = 0;
         while (beehive != null)
         {
             looted = beehive.LootHoney(1);
             if(looted > 0)
-                this.OnLoot.Invoke(beehive, looted);
+                this.Loot("honey",  looted, beehive);
             yield return new WaitForSeconds(0.25f);
         }
     }

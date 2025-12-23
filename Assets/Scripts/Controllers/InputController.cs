@@ -16,11 +16,6 @@ public class InputController : BaseController<InputController>
     private float moveFactor = 1f;
     private Vector2 lastDirection =  Vector2.zero;
     
-    void Start()
-    {
-        base.Start();
-    }
-
     // Update is called once per frame
     void Update()
     {

@@ -2,34 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using DefaultNamespace;
 
 public class CameraController : BaseController<CameraController>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        base.Start();
-        // PlayCinematic();
-    }
     
-    [SerializeField] CinemachineVirtualCamera followCam;
-    [SerializeField] CinemachineVirtualCamera cinematicCam;
+    [SerializeField] CinemachineVirtualCamera regularCamera;
+    [SerializeField] CinemachineVirtualCamera onePanelCamera;
+    [SerializeField] CinemachineVirtualCamera menuCamera;
 
-    [SerializeField] float holdTime = 3f;
 
-    public void PlayCinematic()
+    new void Start()
     {
-        cinematicCam.Priority = followCam.Priority + 10;
-        StartCoroutine(CinematicRoutine());
+        UIController.Instance.OnUIStateChanged += SwitchCamera;
     }
 
-    IEnumerator CinematicRoutine()
+
+    void SwitchCamera(UIState state)
     {
-        // Blend to cinematic
-
-        yield return new WaitForSeconds(holdTime);
-
-        // Blend back to follow
-        cinematicCam.Priority = followCam.Priority - 10;
+        if ((state & UIState.MenuPanel) > 0)
+        {
+            this.menuCamera.Priority = 1;
+            this.onePanelCamera.Priority = 0;
+            this.regularCamera.Priority = 0;
+        }
+        else if ((state & UIState.ProximityPanel) > 0)
+        {
+            this.menuCamera.Priority = 0;
+            this.onePanelCamera.Priority = 1;
+            this.regularCamera.Priority = 0;
+        }
+        else
+        {
+            this.menuCamera.Priority = 0;
+            this.onePanelCamera.Priority = 0;
+            this.regularCamera.Priority = 1;
+        }
     }
 }

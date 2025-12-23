@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beehive : MonoBehaviour
+public class Beehive : MonoBehaviour, IInteractable
 {
 
     public float pollenCapacity = 10f;
@@ -12,6 +12,9 @@ public class Beehive : MonoBehaviour
     public float pollen = 0f;
     public float honey = 0f;
     
+    public Transform Transform => this.transform;
+    public float InteractionDistance => 1f;
+  
     void Start()
     {
         

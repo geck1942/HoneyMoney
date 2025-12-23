@@ -13,7 +13,7 @@ public class BaseController<TController> : BaseController
 {
     [CanBeNull] public static TController Instance;
     
-    public void Start()
+    public void Awake()
     {
         if (Instance == null && this is TController)
             Instance = this as TController;

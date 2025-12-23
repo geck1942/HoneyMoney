@@ -37,18 +37,63 @@ SpriteAtlas:
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
+    - 1bb49b30a8a7da04bb94598a0423221c: 21300000
     - 6d411fd0729006643bd451da9573c189: 21300000
     - e02b5a425513c1a4481ea98b6d74b41c: -2413806693520163455
+    - eaddd7338ccb8cf4daccbd18a3c38393: 21300000
+    - fde1e064ae25ca94dba7f68e3f0de71f: 1458550876
+    - fde1e064ae25ca94dba7f68e3f0de71f: -1832584153
+    - fde1e064ae25ca94dba7f68e3f0de71f: 257044429
+    - fde1e064ae25ca94dba7f68e3f0de71f: 1613333754
+    - 2bf51cc5e0eb759478d7a15a99312c95: 21300000
+    - d0344be6d5602614d9368b24c3119793: 21300000
+    - eb864f0769dc2344c99db72139c9af1b: 21300000
     - b72686575cfdbcc4487a9f58097ce943: 21300000
+    - fd099008134f07c4789f227e6bb7a734: 21300000
+    - 62b1696a4bf3d3047b2a390895c8901e: 21300000
+    - 0185cadbd6f875247b9a95a0330a1e6e: 21300000
+    - 13205b5c482f213479970eef5276469e: 21300000
+    - 90102dfef46e0e44fbd27206418a9147: 21300000
+    - 320ee14fea1c4a949b9ef21f5eef77b6: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 1bb49b30a8a7da04bb94598a0423221c, type: 3}
   - {fileID: 21300000, guid: 6d411fd0729006643bd451da9573c189, type: 3}
   - {fileID: -2413806693520163455, guid: e02b5a425513c1a4481ea98b6d74b41c, type: 3}
+  - {fileID: 21300000, guid: eaddd7338ccb8cf4daccbd18a3c38393, type: 3}
+  - {fileID: 1458550876, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
+  - {fileID: -1832584153, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
+  - {fileID: 257044429, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
+  - {fileID: 1613333754, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
+  - {fileID: 21300000, guid: 2bf51cc5e0eb759478d7a15a99312c95, type: 3}
+  - {fileID: 21300000, guid: d0344be6d5602614d9368b24c3119793, type: 3}
+  - {fileID: 21300000, guid: eb864f0769dc2344c99db72139c9af1b, type: 3}
   - {fileID: 21300000, guid: b72686575cfdbcc4487a9f58097ce943, type: 3}
+  - {fileID: 21300000, guid: fd099008134f07c4789f227e6bb7a734, type: 3}
+  - {fileID: 21300000, guid: 62b1696a4bf3d3047b2a390895c8901e, type: 3}
+  - {fileID: 21300000, guid: 0185cadbd6f875247b9a95a0330a1e6e, type: 3}
+  - {fileID: 21300000, guid: 13205b5c482f213479970eef5276469e, type: 3}
+  - {fileID: 21300000, guid: 90102dfef46e0e44fbd27206418a9147, type: 3}
+  - {fileID: 21300000, guid: 320ee14fea1c4a949b9ef21f5eef77b6, type: 3}
   m_PackedSpriteNamesToIndex:
+  - panel
   - beehive_panel_example
   - Circle
+  - bottom
+  - icon_hive
+  - icon_play
+  - icon_backpack
+  - icon_shop
+  - hexagon_hollow
+  - beehive_panel_example2
+  - panel_shop
   - WhiteSquare
+  - hexagon_honey
+  - button_disabled
+  - top
+  - button_hover
+  - button
+  - hexagon
   m_RenderDataMap: {}
   m_Tag: UI
   m_IsVariant: 0
