@@ -46,10 +46,12 @@ SpriteAtlas:
     - fde1e064ae25ca94dba7f68e3f0de71f: 257044429
     - fde1e064ae25ca94dba7f68e3f0de71f: 1613333754
     - 2bf51cc5e0eb759478d7a15a99312c95: 21300000
+    - 9675f1561ccdc3847b88ab80eb3024f5: 21300000
     - d0344be6d5602614d9368b24c3119793: 21300000
     - eb864f0769dc2344c99db72139c9af1b: 21300000
     - b72686575cfdbcc4487a9f58097ce943: 21300000
     - fd099008134f07c4789f227e6bb7a734: 21300000
+    - cedb506947e87d441bac9f4732fd15f0: 21300000
     - 62b1696a4bf3d3047b2a390895c8901e: 21300000
     - 0185cadbd6f875247b9a95a0330a1e6e: 21300000
     - 13205b5c482f213479970eef5276469e: 21300000
@@ -66,10 +68,12 @@ SpriteAtlas:
   - {fileID: 257044429, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
   - {fileID: 1613333754, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
   - {fileID: 21300000, guid: 2bf51cc5e0eb759478d7a15a99312c95, type: 3}
+  - {fileID: 21300000, guid: 9675f1561ccdc3847b88ab80eb3024f5, type: 3}
   - {fileID: 21300000, guid: d0344be6d5602614d9368b24c3119793, type: 3}
   - {fileID: 21300000, guid: eb864f0769dc2344c99db72139c9af1b, type: 3}
   - {fileID: 21300000, guid: b72686575cfdbcc4487a9f58097ce943, type: 3}
   - {fileID: 21300000, guid: fd099008134f07c4789f227e6bb7a734, type: 3}
+  - {fileID: 21300000, guid: cedb506947e87d441bac9f4732fd15f0, type: 3}
   - {fileID: 21300000, guid: 62b1696a4bf3d3047b2a390895c8901e, type: 3}
   - {fileID: 21300000, guid: 0185cadbd6f875247b9a95a0330a1e6e, type: 3}
   - {fileID: 21300000, guid: 13205b5c482f213479970eef5276469e, type: 3}
@@ -85,10 +89,12 @@ SpriteAtlas:
   - icon_backpack
   - icon_shop
   - hexagon_hollow
+  - hexagon_coin
   - beehive_panel_example2
   - panel_shop
   - WhiteSquare
   - hexagon_honey
+  - coin
   - button_disabled
   - top
   - button_hover

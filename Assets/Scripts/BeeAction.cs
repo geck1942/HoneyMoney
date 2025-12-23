@@ -6,6 +6,7 @@ namespace DefaultNamespace
         GoToFlower = 1,
         HarvestPollen = 2,
         GoToHive = 3,
-        ProcessHoney = 4
+        ProcessHoney = 4,
+        Stop = 5
     }
 }

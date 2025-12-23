@@ -65,7 +65,7 @@ public class PlayerController : BaseController<PlayerController>
                 if(closestInteractable is Beehive beehive)
                     this.OnBeehiveReached?.Invoke(beehive);
             }
-            if (closestInteractable != lastClosestInteractable)
+            else if (closestInteractable != lastClosestInteractable)
             {
                 this._activeInteractable = closestInteractable;
                 this.OnInteractableLeft?.Invoke(lastClosestInteractable);
@@ -97,7 +97,7 @@ public class PlayerController : BaseController<PlayerController>
         StopCoroutine(this._lootingCoroutine);
     }
 
-    public void Loot(string resource, float quantity, Beehive beehive = null)
+    public void Loot(string resource, float quantity, IInteractable target = null)
     {
         switch (resource)
         {
@@ -108,7 +108,7 @@ public class PlayerController : BaseController<PlayerController>
                 this.Inventory.Honey +=  quantity;
                 break;
         }
-        this.OnLoot.Invoke(resource, quantity,  beehive);
+        this.OnLoot.Invoke(resource, quantity, target);
     }
 
     IEnumerator LootBeehiveAsync(Beehive beehive)

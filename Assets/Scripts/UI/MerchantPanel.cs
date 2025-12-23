@@ -28,7 +28,7 @@ public class MerchantPanel : MonoBehaviour
     {
         float soldQuantity = PlayerController.Instance.Inventory.Honey;
         float price = FarmController.Instance.HoneyPrice * soldQuantity;
-        PlayerController.Instance.Loot("honey", -soldQuantity);
-        PlayerController.Instance.Loot("money", price);
+        PlayerController.Instance.Loot("honey", -soldQuantity, FarmController.Instance.merchant);
+        PlayerController.Instance.Loot("money", price, FarmController.Instance.merchant);
     }
 }

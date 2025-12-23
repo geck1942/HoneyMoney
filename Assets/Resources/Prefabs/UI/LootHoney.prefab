@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4275018923586482571}
   m_Layer: 0
-  m_Name: Loot
+  m_Name: LootHoney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

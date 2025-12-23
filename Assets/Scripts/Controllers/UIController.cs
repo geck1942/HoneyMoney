@@ -16,7 +16,8 @@ public class UIController : BaseController<UIController>
     public MerchantPanel merchantPanel;
     
     public Transform proximityCircle;
-    public GameObject lootPrefab;
+    public GameObject lootHoneyPrefab;
+    public GameObject lootMoneyPrefab;
     
     public delegate void UIStateEvent(UIState state);
     public event UIStateEvent OnUIStateChanged;
@@ -72,9 +73,18 @@ public class UIController : BaseController<UIController>
 
     public void ShowLoot(string resource, float quantity, IInteractable target)
     {
-        if (target != null)
+        if (target != null && quantity > 0)
         {
-            var lootIcon = GameObject.Instantiate(lootPrefab, target.Transform.position, Quaternion.identity);
+            GameObject lootIcon = null;
+            switch (resource)
+            {
+                case "honey":
+                    lootIcon = GameObject.Instantiate(lootHoneyPrefab, target.Transform.position, Quaternion.identity);
+                    break;
+                case "money":
+                    lootIcon = GameObject.Instantiate(lootMoneyPrefab, target.Transform.position, Quaternion.identity);
+                    break;
+            }
             StartCoroutine(ShowLootCoroutine(lootIcon));
         }
     }
