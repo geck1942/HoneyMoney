@@ -18,6 +18,10 @@ public class UIController : BaseController<UIController>
     public Transform proximityCircle;
     public GameObject lootHoneyPrefab;
     public GameObject lootMoneyPrefab;
+
+    public RectTransform dialog;
+    public TMPro.TextMeshProUGUI dialogText;
+    private Coroutine dialogCoroutine = null;
     
     public delegate void UIStateEvent(UIState state);
     public event UIStateEvent OnUIStateChanged;
@@ -31,12 +35,41 @@ public class UIController : BaseController<UIController>
             PlayerController.Instance.OnLoot += ShowLoot;
             PlayerController.Instance.OnLoot += ((resource, quantity, beehive) => RefreshTopBar());
         }
+
+        if (ScenarioController.Instance != null)
+        {
+            ScenarioController.Instance.OnScenarioNextStep += InstanceOnOnScenarioNextStep;
+        }
         
         this.RefreshTopBar();
         this.TogglePlayMode(true);
         this.OnInteractableLeft(null);
+        this.HideDialog();
     }
-    
+
+    private void InstanceOnOnScenarioNextStep(ScenarioState scenarioState, ScenarioStep step)
+    {
+        if(dialogCoroutine != null)
+            StopCoroutine(dialogCoroutine);
+        dialogCoroutine = StartCoroutine(ShowDialog(step.message, step.messageDuration));
+    }
+
+    private IEnumerator ShowDialog(string message, float duration)
+    {
+        if (!string.IsNullOrEmpty(message))
+        {
+            this.dialogText.text = message;
+            this.dialog.gameObject.SetActive(true);
+            yield return new WaitForSeconds(duration);
+        }
+        this.HideDialog();
+    }
+
+    public void HideDialog()
+    {
+        this.dialog.gameObject.SetActive(false);
+    }
+
     private void OnInteractableLeft(IInteractable target)
     {
         this.beehivePanel.target = null;

@@ -54,7 +54,19 @@ SpriteAtlas:
     - cedb506947e87d441bac9f4732fd15f0: 21300000
     - 62b1696a4bf3d3047b2a390895c8901e: 21300000
     - 0185cadbd6f875247b9a95a0330a1e6e: 21300000
+    - 3341e11ccb8b45a42b6db5bbe4ed449d: -1232663029
+    - 3341e11ccb8b45a42b6db5bbe4ed449d: -408234559
+    - 3341e11ccb8b45a42b6db5bbe4ed449d: 1200865785
     - 13205b5c482f213479970eef5276469e: 21300000
+    - d3acda5d9507d25418ff23ab810f7e16: -2044402830
+    - d3acda5d9507d25418ff23ab810f7e16: -139315524
+    - d3acda5d9507d25418ff23ab810f7e16: -622831772
+    - d3acda5d9507d25418ff23ab810f7e16: 1940185411
+    - d3acda5d9507d25418ff23ab810f7e16: -982789407
+    - d3acda5d9507d25418ff23ab810f7e16: 1080099200
+    - d3acda5d9507d25418ff23ab810f7e16: -205597094
+    - d3acda5d9507d25418ff23ab810f7e16: -1407229172
+    - b757ac7d98efdb64fae357ddde5991a5: 21300000
     - 90102dfef46e0e44fbd27206418a9147: 21300000
     - 320ee14fea1c4a949b9ef21f5eef77b6: 21300000
   m_MasterAtlas: {fileID: 0}
@@ -76,7 +88,19 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cedb506947e87d441bac9f4732fd15f0, type: 3}
   - {fileID: 21300000, guid: 62b1696a4bf3d3047b2a390895c8901e, type: 3}
   - {fileID: 21300000, guid: 0185cadbd6f875247b9a95a0330a1e6e, type: 3}
+  - {fileID: -1232663029, guid: 3341e11ccb8b45a42b6db5bbe4ed449d, type: 3}
+  - {fileID: -408234559, guid: 3341e11ccb8b45a42b6db5bbe4ed449d, type: 3}
+  - {fileID: 1200865785, guid: 3341e11ccb8b45a42b6db5bbe4ed449d, type: 3}
   - {fileID: 21300000, guid: 13205b5c482f213479970eef5276469e, type: 3}
+  - {fileID: -2044402830, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: -139315524, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: -622831772, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: 1940185411, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: -982789407, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: 1080099200, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: -205597094, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: -1407229172, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  - {fileID: 21300000, guid: b757ac7d98efdb64fae357ddde5991a5, type: 3}
   - {fileID: 21300000, guid: 90102dfef46e0e44fbd27206418a9147, type: 3}
   - {fileID: 21300000, guid: 320ee14fea1c4a949b9ef21f5eef77b6, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -97,7 +121,19 @@ SpriteAtlas:
   - coin
   - button_disabled
   - top
+  - scenario_ui_exclam
+  - scenario_ui_qustion
+  - scenario_ui_arrow
   - button_hover
+  - item_flowerblue
+  - item_plank
+  - item_scarecrow
+  - item_floweryellow
+  - item_beehive
+  - item_flowerred
+  - item_strawberry
+  - item_flowerwhite
+  - honey
   - button
   - hexagon
   m_RenderDataMap: {}

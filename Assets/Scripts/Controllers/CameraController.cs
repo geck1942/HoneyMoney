@@ -18,7 +18,7 @@ public class CameraController : BaseController<CameraController>
     }
 
 
-    void SwitchCamera(UIState state)
+    private void SwitchCamera(UIState state)
     {
         if ((state & UIState.MenuPanel) > 0)
         {
@@ -38,5 +38,16 @@ public class CameraController : BaseController<CameraController>
             this.onePanelCamera.Priority = 0;
             this.regularCamera.Priority = 1;
         }
+    }
+
+    public void SwitchToSpecialCamera(CinemachineVirtualCamera camera, float duration)
+    {
+        camera.Priority = 2;
+        StartCoroutine(this.holdCamera(camera, duration));
+    }
+    private IEnumerator holdCamera(CinemachineVirtualCamera camera, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        camera.Priority = 0;
     }
 }

@@ -8,7 +8,7 @@ public class Bee : MonoBehaviour
 {
     public NavMeshAgent agent;
     
-    public BeeAction action = BeeAction.Idle;
+    public BeeAction beeAction = BeeAction.Idle;
     public Flower target;
     public Beehive hive;
     
@@ -27,7 +27,7 @@ public class Bee : MonoBehaviour
     void Update()
     {
         this.FixCycle();
-        switch (this.action)
+        switch (this.beeAction)
         {
             case BeeAction.GoToFlower:
                 this.GoToFlower();
@@ -45,7 +45,7 @@ public class Bee : MonoBehaviour
     }
     private void FixCycle()
     {
-        switch (this.action)
+        switch (this.beeAction)
         {
             case BeeAction.Idle:
                 this.StartCycle();
@@ -53,12 +53,12 @@ public class Bee : MonoBehaviour
             case BeeAction.GoToFlower:
             case BeeAction.HarvestPollen:
                 if (this.target == null)
-                    this.action = BeeAction.Idle;
+                    this.beeAction = BeeAction.Idle;
                 break;
             case BeeAction.GoToHive:
             case BeeAction.ProcessHoney: 
                 if(this.hive == null)
-                    this.action = BeeAction.Idle;
+                    this.beeAction = BeeAction.Idle;
                 break;
         }
     }
@@ -72,7 +72,7 @@ public class Bee : MonoBehaviour
     {
         if (this.IsLoaded())
         {
-            this.action = BeeAction.GoToHive;
+            this.beeAction = BeeAction.GoToHive;
         }
         else
         {
@@ -81,7 +81,7 @@ public class Bee : MonoBehaviour
             if (targetFlower != null)
             {
                 this.target = targetFlower;
-                this.action = BeeAction.GoToFlower;
+                this.beeAction = BeeAction.GoToFlower;
             }
         }
     }
@@ -92,7 +92,7 @@ public class Bee : MonoBehaviour
         Vector3 direction = this.agent.destination - this.transform.position;
         if (direction.magnitude < 0.5f)
         {
-            this.action = BeeAction.HarvestPollen;
+            this.beeAction = BeeAction.HarvestPollen;
         }
     }
 
@@ -105,7 +105,7 @@ public class Bee : MonoBehaviour
         if (this.load >= this.capacity)
         {
             this.load = capacity;
-            this.action = BeeAction.Idle;
+            this.beeAction = BeeAction.Idle;
         }
     }
 
@@ -115,7 +115,7 @@ public class Bee : MonoBehaviour
         Vector3 direction = this.agent.destination - this.transform.position;
         if (direction.magnitude < 0.1f)
         {
-            this.action = BeeAction.ProcessHoney;
+            this.beeAction = BeeAction.ProcessHoney;
         }
 
     }
@@ -127,7 +127,7 @@ public class Bee : MonoBehaviour
         if (this.load <= 0)
         {
             this.load = 0;
-            this.action = BeeAction.Idle;
+            this.beeAction = BeeAction.Idle;
         }
     }
 }

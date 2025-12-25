@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
@@ -11,10 +12,12 @@ public class FarmController : BaseController<FarmController>
     public List<Bee> bees = new List<Bee>();
     public List<Flower> flowers = new List<Flower>();
     public Merchant merchant;
+    public List<NavMeshSurface> surfaces = new List<NavMeshSurface>();
 
     public float HoneyPrice = 1f;
     
     private Random _random =  new Random();
+    private Coroutine _refreshNavigationCoroutine;
     void Start()
     {
         this.flowers = GameObject.FindGameObjectsWithTag("Flower")
@@ -45,6 +48,17 @@ public class FarmController : BaseController<FarmController>
         if(merchant != null)
             yield return this.merchant;
     }
-    
+
+    public void RefreshNavigation()
+    {
+        if(this._refreshNavigationCoroutine != null)
+            StopCoroutine(this._refreshNavigationCoroutine);
+        _refreshNavigationCoroutine = StartCoroutine(RefreshNavigationRoutine());
+    }
+
+    private IEnumerator RefreshNavigationRoutine()
+    {
+        yield return null;
+    }
     
 }
