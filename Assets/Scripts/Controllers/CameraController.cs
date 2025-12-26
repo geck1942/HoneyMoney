@@ -48,6 +48,11 @@ public class CameraController : BaseController<CameraController>
     private IEnumerator holdCamera(CinemachineVirtualCamera camera, float duration)
     {
         yield return new WaitForSeconds(duration);
+        this.CancelSpecialCamera(camera);
+    }
+
+    public void CancelSpecialCamera(CinemachineVirtualCamera camera)
+    {
         camera.Priority = 0;
     }
 }

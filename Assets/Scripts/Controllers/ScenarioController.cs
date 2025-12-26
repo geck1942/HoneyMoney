@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ScenarioController : BaseController<ScenarioController>
 {
-    public ScenarioState state = ScenarioState.None;
+    public ScenarioState state = ScenarioState.Intro;
     public Bear Bear;
     
     public List<ScenarioStep> steps = new List<ScenarioStep>();
@@ -20,7 +20,7 @@ public class ScenarioController : BaseController<ScenarioController>
         PlayerController.Instance.OnLoot += ActUponLoot;
         ScenarioController.Instance.OnScenarioNextStep += ActUponScenarioStep;
         
-        this.GoToStep(ScenarioState.GotoHives1);
+        this.GoToStep(ScenarioState.Intro);
     }
 
     public void GoToNextStep()
@@ -77,7 +77,8 @@ public class ScenarioController : BaseController<ScenarioController>
 
 public enum ScenarioState
 {
-    None = 0,
+    None = -1,
+    Intro = 0,
     GotoHives1 = 1,
     CollectHoney1 = 2,
     GotoMerchant1 = 3,  
@@ -86,8 +87,12 @@ public enum ScenarioState
     BearIncoming = 6,
     BuyPlanks = 7,
     FixFence = 8,
-    BearIncoming2 = 9,
-    BuyStawberries = 10
-    
+    CollectHoney2 = 9,
+    BearIncoming2 = 10,
+    BuyStawberries = 11,
+    PlantStrawberries = 12,
+    ExplainStrawberries = 13,
+    ExplainGame = 14,
+    Done = 15
     
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : BaseController<PlayerController>
 {
@@ -9,6 +10,8 @@ public class PlayerController : BaseController<PlayerController>
     public Transform proximityRadar;
 
     public Inventory Inventory = new Inventory();
+    
+    public List<GameObject> honeyJars = new List<GameObject>();
     
     public delegate void ProximityEvent(IInteractable target);
     public delegate void ProximityEvent<TInteractable>(TInteractable target)
@@ -21,6 +24,7 @@ public class PlayerController : BaseController<PlayerController>
     public event ProximityEvent<Beehive> OnBeehiveLeft;
     public event LootEvent OnLoot;
     
+    
     private IInteractable _activeInteractable = null;
     private Coroutine _lootingCoroutine = null; 
     
@@ -28,6 +32,17 @@ public class PlayerController : BaseController<PlayerController>
     {
         this.OnBeehiveReached += this.StartLooting;
         this.OnBeehiveLeft += this.StopLooting;
+
+        this.OnLoot += AdjustBackpack;
+    }
+
+    private void AdjustBackpack(string resource, float quantity, IInteractable target)
+    {
+        for (int i = 0; i < honeyJars.Count; i++)
+        {
+            honeyJars[i].SetActive(this.Inventory.Honey >= i + 1);
+        }
+            
     }
 
     // Update is called once per frame
@@ -107,17 +122,7 @@ public class PlayerController : BaseController<PlayerController>
     /// <returns>True if quantity was increased</returns>
     public bool Loot(string resource, float quantity, IInteractable target = null)
     {
-        bool increased = quantity >= 1f;
-        switch (resource)
-        {
-            case "money":
-                this.Inventory.Money += quantity;
-                break;
-            case "honey":
-                increased |= this.Inventory.Honey - Mathf.Floor(this.Inventory.Honey) + quantity >= 1f;
-                this.Inventory.Honey +=  quantity;
-                break;
-        }
+        bool increased = this.Inventory.Add(resource, quantity);
         if (increased)
             this.OnLoot.Invoke(resource, quantity, target);
         return increased;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIController : BaseController<UIController>
 {
@@ -21,6 +22,7 @@ public class UIController : BaseController<UIController>
 
     public RectTransform dialog;
     public TMPro.TextMeshProUGUI dialogText;
+    public RectTransform joystickBlock;
     private Coroutine dialogCoroutine = null;
     
     public delegate void UIStateEvent(UIState state);
@@ -47,11 +49,21 @@ public class UIController : BaseController<UIController>
         this.HideDialog();
     }
 
+    public void PlaceJoystick(BaseEventData eventData)
+    {
+        if(eventData is PointerEventData pointerEventData)
+        this.joystickBlock.position = pointerEventData.position;
+    }
+
     private void InstanceOnOnScenarioNextStep(ScenarioState scenarioState, ScenarioStep step)
     {
+        this.HideDialog();
+        this.joystickBlock.gameObject.SetActive(!step.freezePlayer);
+        
         if(dialogCoroutine != null)
             StopCoroutine(dialogCoroutine);
         dialogCoroutine = StartCoroutine(ShowDialog(step.message, step.messageDuration));
+        
     }
 
     private IEnumerator ShowDialog(string message, float duration)
@@ -60,9 +72,12 @@ public class UIController : BaseController<UIController>
         {
             this.dialogText.text = message;
             this.dialog.gameObject.SetActive(true);
-            yield return new WaitForSeconds(duration);
+            if (duration > 0)
+            {
+                yield return new WaitForSeconds(duration);
+                this.HideDialog();
+            }
         }
-        this.HideDialog();
     }
 
     public void HideDialog()

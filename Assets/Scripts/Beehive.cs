@@ -11,9 +11,10 @@ public class Beehive : MonoBehaviour, IInteractable
     public float processingRatio = 1f;
     public float pollen = 0f;
     public float honey = 0f;
+    public int level = 1;
     
     public Transform Transform => this.transform;
-    public float InteractionDistance => 1f;
+    public float InteractionDistance => 1.5f;
   
     void Start()
     {

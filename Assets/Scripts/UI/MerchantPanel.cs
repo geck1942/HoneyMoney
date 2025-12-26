@@ -58,8 +58,8 @@ public class MerchantPanel : MonoBehaviour
             .GetComponentInChildren<TMPro.TextMeshProUGUI>().text;
         float price = float.Parse(strprice);
 
-        PlayerController.Instance.Loot(itemname, 1, FarmController.Instance.merchant);
         PlayerController.Instance.Loot("money", -price, FarmController.Instance.merchant);
+        PlayerController.Instance.Loot(itemname, 1, FarmController.Instance.merchant);
     
     }
 }

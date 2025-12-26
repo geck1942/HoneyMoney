@@ -120,7 +120,7 @@ public class Bear : MonoBehaviour
         this.animator.Play("Run");
         yield return new WaitForSeconds(0.8f);
         this.animator.Play("Roll");
-        this.agent.speed = 6f;
+        this.agent.speed = 10f;
     }
 
 }

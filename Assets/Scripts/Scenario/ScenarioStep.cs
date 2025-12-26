@@ -8,9 +8,11 @@
     public class ScenarioStep : MonoBehaviour
     {
         public ScenarioState State;
+        public List<GameObject> deactivateNoDelay;
         public List<GameObject> activateNoDelay;
         public float delay = 0;
         public List<GameObject> activateAfterDelay;
+        [Multiline]
         public string message;
         public float messageDuration = 10f;
         public CinemachineVirtualCamera specialCamera = null;
@@ -50,6 +52,9 @@
                 StopCoroutine(this.waitAndShowHelpCoroutine);
             this.HideItems();
 
+            if(this.specialCamera != null)
+                CameraController.Instance.CancelSpecialCamera(this.specialCamera);
+            
             if(this.freezePlayer)
                 PlayerController.Instance.player.characterController.enabled = true;
         }
@@ -60,6 +65,9 @@
             foreach (var item in activateNoDelay)
                 if(item != null)
                     item.SetActive(true);
+            foreach (var item in deactivateNoDelay)
+                if(item != null)
+                    item.SetActive(false);
 
             if (activateAfterDelay.Count > 0)
             {

@@ -39,17 +39,23 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 1bb49b30a8a7da04bb94598a0423221c: 21300000
     - 6d411fd0729006643bd451da9573c189: 21300000
+    - 201109f071b359a48a82b89bb15316cc: 21300000
     - e02b5a425513c1a4481ea98b6d74b41c: -2413806693520163455
+    - e9654d13d25335d478de856e595d7c74: 21300000
     - eaddd7338ccb8cf4daccbd18a3c38393: 21300000
     - fde1e064ae25ca94dba7f68e3f0de71f: 1458550876
     - fde1e064ae25ca94dba7f68e3f0de71f: -1832584153
     - fde1e064ae25ca94dba7f68e3f0de71f: 257044429
     - fde1e064ae25ca94dba7f68e3f0de71f: 1613333754
+    - 9d2173b57c317bc4589f110846b2f5d3: 21300000
     - 2bf51cc5e0eb759478d7a15a99312c95: 21300000
+    - f468e616fa6ee244eac23c6ecc43039d: 21300000
+    - 5d86d92681953e440b458cdc09311b18: 21300000
     - 9675f1561ccdc3847b88ab80eb3024f5: 21300000
     - d0344be6d5602614d9368b24c3119793: 21300000
     - eb864f0769dc2344c99db72139c9af1b: 21300000
     - b72686575cfdbcc4487a9f58097ce943: 21300000
+    - b9bd1da762141c447b8106406dab5666: 21300000
     - fd099008134f07c4789f227e6bb7a734: 21300000
     - cedb506947e87d441bac9f4732fd15f0: 21300000
     - 62b1696a4bf3d3047b2a390895c8901e: 21300000
@@ -73,17 +79,23 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 1bb49b30a8a7da04bb94598a0423221c, type: 3}
   - {fileID: 21300000, guid: 6d411fd0729006643bd451da9573c189, type: 3}
+  - {fileID: 21300000, guid: 201109f071b359a48a82b89bb15316cc, type: 3}
   - {fileID: -2413806693520163455, guid: e02b5a425513c1a4481ea98b6d74b41c, type: 3}
+  - {fileID: 21300000, guid: e9654d13d25335d478de856e595d7c74, type: 3}
   - {fileID: 21300000, guid: eaddd7338ccb8cf4daccbd18a3c38393, type: 3}
   - {fileID: 1458550876, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
   - {fileID: -1832584153, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
   - {fileID: 257044429, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
   - {fileID: 1613333754, guid: fde1e064ae25ca94dba7f68e3f0de71f, type: 3}
+  - {fileID: 21300000, guid: 9d2173b57c317bc4589f110846b2f5d3, type: 3}
   - {fileID: 21300000, guid: 2bf51cc5e0eb759478d7a15a99312c95, type: 3}
+  - {fileID: 21300000, guid: f468e616fa6ee244eac23c6ecc43039d, type: 3}
+  - {fileID: 21300000, guid: 5d86d92681953e440b458cdc09311b18, type: 3}
   - {fileID: 21300000, guid: 9675f1561ccdc3847b88ab80eb3024f5, type: 3}
   - {fileID: 21300000, guid: d0344be6d5602614d9368b24c3119793, type: 3}
   - {fileID: 21300000, guid: eb864f0769dc2344c99db72139c9af1b, type: 3}
   - {fileID: 21300000, guid: b72686575cfdbcc4487a9f58097ce943, type: 3}
+  - {fileID: 21300000, guid: b9bd1da762141c447b8106406dab5666, type: 3}
   - {fileID: 21300000, guid: fd099008134f07c4789f227e6bb7a734, type: 3}
   - {fileID: 21300000, guid: cedb506947e87d441bac9f4732fd15f0, type: 3}
   - {fileID: 21300000, guid: 62b1696a4bf3d3047b2a390895c8901e, type: 3}
@@ -106,17 +118,23 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - panel
   - beehive_panel_example
+  - icon
   - Circle
+  - none
   - bottom
   - icon_hive
   - icon_play
   - icon_backpack
   - icon_shop
+  - slider_bg
   - hexagon_hollow
+  - splash
+  - slider_bar
   - hexagon_coin
   - beehive_panel_example2
   - panel_shop
   - WhiteSquare
+  - bucks
   - hexagon_honey
   - coin
   - button_disabled

@@ -4,17 +4,25 @@
     using System.Linq;
     using UnityEngine;
 
-    public class ScenarioStep_Build : ScenarioStep
+    public class ScenarioStep_Build : ScenarioStep, IInteractable
     {
         public List<GameObject> removeProps = new List<GameObject>();
         public List<GameObject> addProps = new List<GameObject>();
-        public float buildDuration = 0f; 
-        
+        public float buildDuration = 0f;
+        public float itemNeededQuantity = 0;
+        public string itemNeeded = "";
         public bool triggerNavMeshUpdate = false;
 
 
-        public void StartBuild()
+        public void StartBuildIfInvetory()
         {
+            if (!string.IsNullOrEmpty(this.itemNeeded))
+            {
+                if(!PlayerController.Instance.Inventory.Has(itemNeeded, itemNeededQuantity))
+                    return;
+                
+                PlayerController.Instance.Loot(itemNeeded, -itemNeededQuantity);
+            }
             StartCoroutine(BuildRoutine());
         }
 
@@ -37,4 +45,6 @@
             ScenarioController.Instance.GoToNextStep();
         }
 
+        public Transform Transform => this.transform;
+        public float InteractionDistance => 2f;
     }
