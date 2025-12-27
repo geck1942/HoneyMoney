@@ -1,7 +1,7 @@
     public enum BearAction
     {
         Idle = 0,
-        GoToHive = 1,
+        GoToTarget = 1,
         PrepareToSteal = 2,
         StealHoney = 3,
         CelebrateSteal = 4,

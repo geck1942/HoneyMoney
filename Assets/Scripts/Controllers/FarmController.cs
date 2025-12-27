@@ -10,6 +10,7 @@ public class FarmController : BaseController<FarmController>
     public List<Beehive> hives = new List<Beehive>();
     public List<Bee> bees = new List<Bee>();
     public List<Flower> flowers = new List<Flower>();
+    public List<Strawberry> strawberries = new List<Strawberry>();
     public List<BuildElement> builds = new List<BuildElement>();
     public List<Transform> chickenTargets = new List<Transform>();
     
@@ -33,7 +34,7 @@ public class FarmController : BaseController<FarmController>
             .Select(obj => obj.GetComponent<Flower>())
             .ToList();
 
-        this.RefreshHives();
+        this.RefreshHivesAndStrawberries();
         
         this._random.InitState();
         PlayerController.Instance.OnInteractableReached += PlayerReachedInteractable;
@@ -84,15 +85,19 @@ public class FarmController : BaseController<FarmController>
                 quantity = target.neededItemsQuantities[i];
             PlayerController.Instance.Loot(item.itemName, -quantity);
         }
-        this.RefreshHives();
+        this.RefreshHivesAndStrawberries();
         this.OnBuild?.Invoke(target);
     }
 
-    public void RefreshHives()
+    public void RefreshHivesAndStrawberries()
     {
         this.hives = GameObject.FindGameObjectsWithTag("Beehive")
             .Select(obj => obj.GetComponent<Beehive>())
             .ToList();
+        this.strawberries = GameObject.FindGameObjectsWithTag("Strawberry")
+            .Select(obj => obj.GetComponent<Strawberry>())
+            .ToList();
+
     }
     
     /// <summary>

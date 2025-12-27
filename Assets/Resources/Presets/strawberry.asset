@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: strawberry
   itemTitle: Fraisier
   icon: {fileID: -205597094, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
-  price: 15
+  price: 3
   buyableAt: 11
   canBeBought: 1
   priceInBucks: 0

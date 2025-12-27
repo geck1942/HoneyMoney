@@ -11,7 +11,7 @@
             base.Begin();
             
             Debug.Log("BEAR");
-            ScenarioController.Instance.Bear.action = BearAction.GoToHive;
+            ScenarioController.Instance.Bear.action = BearAction.GoToTarget;
         }
 
     }

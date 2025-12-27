@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,18 +13,36 @@ public class Bear : MonoBehaviour
     
     public BearAction action = BearAction.Idle;
     public Transform forestWaypoint;
-    public Transform hiveWaypoint;
-    public Beehive hive;
+    public GameObject target;
     
     public float load = 0f;
     public float capacity = 1f;
     public float harvestSpeed = 0.1f;
     public float discardSpeed = 0.1f;
+
+    private Coroutine autoStealCoroutine = null;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        ScenarioController.Instance.OnScenarioNextStep += InstanceOnOnScenarioNextStep;
+    }
+
+    private void InstanceOnOnScenarioNextStep(ScenarioState state, ScenarioStep step)
+    {
+        if (state == ScenarioState.ExplainGame)
+        {
+            this.autoStealCoroutine = StartCoroutine(TriggerStealEvery30Sec());
+        }
+    }
+
+    private IEnumerator TriggerStealEvery30Sec()
+    {
+        while (ScenarioController.Instance.state == ScenarioState.ExplainGame)
+        {
+            yield return new  WaitForSeconds(60f);
+            this.action = BearAction.GoToTarget;
+        }
     }
 
     // Update is called once per frame
@@ -34,8 +53,9 @@ public class Bear : MonoBehaviour
             case BearAction.Hide:
                 this.GoToForest();
                 break;
-            case BearAction.GoToHive:
-                this.GoToHive();
+            case BearAction.GoToTarget:
+                this.FindTarget();
+                this.GoToTarget();
                 break;
             case BearAction.StealHoney:
                 this.StealHoney();
@@ -43,9 +63,14 @@ public class Bear : MonoBehaviour
         }
     }
 
-    public bool IsLoaded()
+    public void FindTarget()
     {
-        return this.load >= this.capacity;
+        Strawberry strawberry = FarmController.Instance.strawberries
+            .FirstOrDefault(s => s != null && s.state == StrawberryStatus.Grown);
+        if(strawberry != null)
+            this.target = strawberry.gameObject;
+        else
+            this.target = FarmController.Instance.hives.OrderBy(x => x.honey).Last().gameObject;
     }
 
 
@@ -69,16 +94,24 @@ public class Bear : MonoBehaviour
         if (this.load >= 1f)
         {
             this.load = 0;
-            this.hive.honey = 0;
+            if (target.gameObject.TryGetComponent(out Beehive hive))
+            {
+                hive.honey = 0;
+            }
+            else if (target.gameObject.TryGetComponent(out Strawberry strawberry))
+            {
+                strawberry.SetStatus(StrawberryStatus.Eaten);
+            }
+            
             StartCoroutine(this.FinishedEating());
         }
     }
 
-    public void GoToHive()
+    public void GoToTarget()
     {
         this.animator.Play("Walk");
         this.agent.speed = 4f;
-        this.agent.destination = this.hiveWaypoint.position;
+        this.agent.destination = this.target.transform.position;
         StartCoroutine(this.WalkingToHive());
     }
 
@@ -96,7 +129,7 @@ public class Bear : MonoBehaviour
             
         this.action = BearAction.PrepareToSteal;
         this.agent.destination = this.transform.position;
-        this.transform.LookAt(this.hive.transform.position);
+        this.transform.LookAt(this.target.transform.position);
         yield return null;
         ScenarioController.Instance.RaiseScenarioAnimation("bear", "excited");
         this.animator.Play("Eyes_Excited");
@@ -125,8 +158,18 @@ public class Bear : MonoBehaviour
         this.animator.Play("Run");
         ScenarioController.Instance.RaiseScenarioAnimation("bear", "leave");
         yield return new WaitForSeconds(0.8f);
-        ScenarioController.Instance.RaiseScenarioAnimation("bear", "roll");
-        this.animator.Play("Roll");
+        
+        // Different animation if honey or strawberry
+        if(this.target.gameObject.GetComponent<Beehive>() != null)
+        {
+            ScenarioController.Instance.RaiseScenarioAnimation("bear", "roll");
+            this.animator.Play("Roll");
+        }
+        else
+        {
+            ScenarioController.Instance.RaiseScenarioAnimation("bear", "run");
+            this.animator.Play("Run");
+        }
         this.agent.speed = 10f;
     }
 
