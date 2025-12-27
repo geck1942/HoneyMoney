@@ -17,9 +17,12 @@ public class BuildElement : MonoBehaviour, IInteractable
 
     public Transform Transform => transform;
     public float InteractionDistance => 3f;
+    public ScenarioState AvailableAt = ScenarioState.None;
 
     public bool PlayerCanBuild()
     {
+        if(!IsAvailable())
+            return false;
         if(this.neededItems.Count == 0)
             return true;
 
@@ -43,5 +46,10 @@ public class BuildElement : MonoBehaviour, IInteractable
             go.SetActive(true);
         
         this.isDone = true;
+    }
+    
+    public bool IsAvailable()
+    {
+        return ScenarioController.Instance.state >= AvailableAt && !this.isDone;
     }
 }

@@ -15,10 +15,12 @@ public class Beehive : MonoBehaviour, IInteractable
     
     public Transform Transform => this.transform;
     public float InteractionDistance => 2.5f;
+    
+    private MeshFilter meshFilter;
   
     void Start()
     {
-        
+        this.meshFilter = this.GetComponentInChildren<MeshFilter>();
     }
 
     // Update is called once per frame
@@ -89,6 +91,8 @@ public class Beehive : MonoBehaviour, IInteractable
             this.level = 2;
             this.honeyCapacity = 5f;
             this.processingSpeed = 0.2f;
+            this.meshFilter.sharedMesh = FarmController.Instance.BeehiveLevel2Mesh;
+            ScenarioController.Instance.RaiseScenarioAnimation("beehive", "upgrade");
         }
     }
 }

@@ -18,6 +18,8 @@ public class FarmController : BaseController<FarmController>
     public List<Item> allItems = new List<Item>();
 
     public float HoneyPrice = 1f;
+    public Mesh BeehiveLevel1Mesh;
+    public Mesh BeehiveLevel2Mesh;
     
     private Random _random =  new Random();
     private Coroutine _refreshNavigationCoroutine;
@@ -31,9 +33,7 @@ public class FarmController : BaseController<FarmController>
             .Select(obj => obj.GetComponent<Flower>())
             .ToList();
 
-        this.hives = GameObject.FindGameObjectsWithTag("Beehive")
-            .Select(obj => obj.GetComponent<Beehive>())
-            .ToList();
+        this.RefreshHives();
         
         this._random.InitState();
         PlayerController.Instance.OnInteractableReached += PlayerReachedInteractable;
@@ -64,7 +64,7 @@ public class FarmController : BaseController<FarmController>
             yield return this.merchant;
         
         foreach (var build in this.builds)
-            if(build != null && build.gameObject.activeSelf && !build.isDone)
+            if(build != null && build.gameObject.activeSelf && build.IsAvailable())
                 yield return build;
      
     }
@@ -84,7 +84,15 @@ public class FarmController : BaseController<FarmController>
                 quantity = target.neededItemsQuantities[i];
             PlayerController.Instance.Loot(item.itemName, -quantity);
         }
+        this.RefreshHives();
         this.OnBuild?.Invoke(target);
+    }
+
+    public void RefreshHives()
+    {
+        this.hives = GameObject.FindGameObjectsWithTag("Beehive")
+            .Select(obj => obj.GetComponent<Beehive>())
+            .ToList();
     }
     
     /// <summary>

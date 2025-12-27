@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: beehive
   itemTitle: Ruche
   icon: {fileID: -982789407, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
-  price: 10
+  price: 20
   buyableAt: 14
   canBeBought: 1
-  priceInBucks: 1
+  priceInBucks: 0

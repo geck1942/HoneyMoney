@@ -16,6 +16,7 @@ public class AudioController : BaseController<AudioController>
     public AudioClip BearGrowlSound;
     public AudioClip BearEatSound;
     public AudioClip BuildSound;
+    public AudioClip UpgradeSound;
     
 
 
@@ -58,6 +59,14 @@ public class AudioController : BaseController<AudioController>
                             this.Play(BuildSound);
                             yield return new WaitForSeconds(0.33f);
                         }
+                        break;
+                }
+                break;
+            case "beehive":
+                switch (status)
+                {
+                    case "upgrade":
+                        this.Play(UpgradeSound);
                         break;
                 }
                 break;
