@@ -14,11 +14,13 @@ public class ScenarioController : BaseController<ScenarioController>
     public delegate void ScenarioEvent(ScenarioState state, ScenarioStep step);
     public event ScenarioEvent OnScenarioNextStep;
 
+    public delegate void AnimationEvent(string actor, string status);
+    public event AnimationEvent OnScenarioAnimation;
+
 
     public void Start()
     {
         PlayerController.Instance.OnLoot += ActUponLoot;
-        ScenarioController.Instance.OnScenarioNextStep += ActUponScenarioStep;
         
         this.GoToStep(ScenarioState.Intro);
     }
@@ -52,7 +54,10 @@ public class ScenarioController : BaseController<ScenarioController>
         }
         
     }
-
+     
+    /// <summary>
+    ///  TODO: Remove this and use new ScenarioStep properties
+    /// </summary>
     public void ActUponLoot(string resource, float quantity, IInteractable target)
     {
         switch (this.state)
@@ -68,11 +73,10 @@ public class ScenarioController : BaseController<ScenarioController>
         }
     }
 
-    public void ActUponScenarioStep(ScenarioState newScenarioState, ScenarioStep step)
+    public void RaiseScenarioAnimation(string actor, string status)
     {
-        // CustomCode
+        this.OnScenarioAnimation?.Invoke(actor, status);
     }
-
 }
 
 public enum ScenarioState

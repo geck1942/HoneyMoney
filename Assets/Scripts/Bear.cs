@@ -86,16 +86,19 @@ public class Bear : MonoBehaviour
     {
         this.action = BearAction.Walking;
         Vector3 direction = this.agent.destination - this.transform.position;
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "walk");
         while (this.agent.remainingDistance == 0f || this.agent.remainingDistance > this.agent.stoppingDistance)
         {
             Debug.Log(this.agent.remainingDistance);
             yield return null;
         }
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "arrived");
             
         this.action = BearAction.PrepareToSteal;
         this.agent.destination = this.transform.position;
         this.transform.LookAt(this.hive.transform.position);
         yield return null;
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "excited");
         this.animator.Play("Eyes_Excited");
         this.animator.Play("Idle_A");
         yield return new WaitForSeconds(0.3f);
@@ -106,6 +109,7 @@ public class Bear : MonoBehaviour
         this.animator.Play("Attack");
         this.animator.Play("Eyes_Happy");
         this.action = BearAction.StealHoney;
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "eat");
     }
 
     private IEnumerator FinishedEating()
@@ -113,12 +117,15 @@ public class Bear : MonoBehaviour
         this.action = BearAction.CelebrateSteal;
         this.animator.Play("Idle_A");
         yield return new WaitForSeconds(0.25f);
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "lookout");
         this.animator.Play("Eyes_LookOut");
         yield return new WaitForSeconds(0.5f);
         this.animator.Play("Eyes_Blink");
         this.action = BearAction.Hide;
         this.animator.Play("Run");
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "leave");
         yield return new WaitForSeconds(0.8f);
+        ScenarioController.Instance.RaiseScenarioAnimation("bear", "roll");
         this.animator.Play("Roll");
         this.agent.speed = 10f;
     }

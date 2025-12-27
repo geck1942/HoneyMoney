@@ -35,6 +35,7 @@
                 yield return null;
             }
             PlayerController.Instance.player.animator.Play("Build");
+            ScenarioController.Instance.RaiseScenarioAnimation("player", "build");
             yield return new WaitForSeconds(buildDuration);
             PlayerController.Instance.player.animator.Play("Idle");
             foreach (var prop in addProps)

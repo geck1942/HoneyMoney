@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Input controller listens to the controller joystick
+/// to read movements and sends events for the GameController.
+/// </summary>
 public class InputController : BaseController<InputController>
 {
-    /* Input controller listens to the controller joystick to read movements
-     * and sends events for the GameController
-     */
+
     public InputActionReference moveAction;
     
     public delegate void DirectionEvent (Vector2 direction);
@@ -18,7 +20,6 @@ public class InputController : BaseController<InputController>
     private float moveFactor = 1f;
     private Vector2 lastDirection =  Vector2.zero;
     
-    // Update is called once per frame
     void Update()
     {
         // Read joystick input

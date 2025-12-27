@@ -34,7 +34,7 @@ public class Chicken : MonoBehaviour
             StopCoroutine(this.GoingCoroutine);
 
         this.agent.speed = _random.NextFloat(1, 3);
-        this.target = FarmController.Instance.GetRandomChickenTarget();
+        this.target = FarmController.Instance.FindGrain();
         this.GoingCoroutine = StartCoroutine(this.Cycle());
     }
 

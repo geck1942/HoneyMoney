@@ -39,6 +39,9 @@ public class FarmController : BaseController<FarmController>
         PlayerController.Instance.OnInteractableReached += PlayerReachedInteractable;
     }
 
+    /// <summary>
+    /// Auto build if player is closeby a Build Element
+    /// </summary>
     private void PlayerReachedInteractable(IInteractable target)
     {
         if(target is BuildElement buildElement 
@@ -48,13 +51,9 @@ public class FarmController : BaseController<FarmController>
     }
 
 
-    public Flower FindFlower(float quantity)
-    {
-        if (flowers.Count == 0)
-            return null;
-        return  flowers[_random.NextInt(flowers.Count)];
-    }
-
+    /// <summary>
+    /// Yields all Interactable objects. Needed for PlayerController to find proximity
+    /// </summary>
     public IEnumerable<IInteractable> GetAllInteractables()
     {
         foreach (var hive in this.hives)
@@ -70,18 +69,10 @@ public class FarmController : BaseController<FarmController>
      
     }
 
-    public void RefreshNavigation()
-    {
-        if(this._refreshNavigationCoroutine != null)
-            StopCoroutine(this._refreshNavigationCoroutine);
-        _refreshNavigationCoroutine = StartCoroutine(RefreshNavigationRoutine());
-    }
-
-    private IEnumerator RefreshNavigationRoutine()
-    {
-        yield return null;
-    }
-
+    /// <summary>
+    /// Player Builds a Build Element.
+    /// Consumes needed items and deal with ame objects.
+    /// </summary>
     public void Build(BuildElement target)
     {
         target.Build();
@@ -95,8 +86,24 @@ public class FarmController : BaseController<FarmController>
         }
         this.OnBuild?.Invoke(target);
     }
-
-    public Transform GetRandomChickenTarget()
+    
+    /// <summary>
+    /// Bees need to find a random flower to get honey from
+    /// </summary>
+    /// <param name="quantity"></param>
+    /// <returns>A random flower from the list</returns>
+    public Flower FindFlower(float quantity)
+    {
+        if (flowers.Count == 0)
+            return null;
+        return  flowers[_random.NextInt(flowers.Count)];
+    }
+    /// <summary>
+    /// Chickens need to find a place to eat.
+    /// Gets a random point from the list.
+    /// </summary>
+    /// <returns>Any target from the list</returns>
+    public Transform FindGrain()
     {
         return this.chickenTargets.OrderBy(t => this._random.NextDouble()).FirstOrDefault();
     }

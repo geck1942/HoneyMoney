@@ -53,12 +53,19 @@ public class UIController : BaseController<UIController>
         this.HideDialog();
     }
 
+    /// <summary>
+    /// Place the joystick under the players finger
+    /// </summary>
+    /// <param name="eventData"></param>
     public void PlaceJoystick(BaseEventData eventData)
     {
         if(eventData is PointerEventData pointerEventData)
-        this.joystickBlock.position = pointerEventData.position;
+            this.joystickBlock.position = pointerEventData.position;
     }
 
+    /// <summary>
+    /// Change UI When new Scenario step is reached.
+    /// </summary>
     private void InstanceOnOnScenarioNextStep(ScenarioState scenarioState, ScenarioStep step)
     {
         this.HideDialog();
@@ -70,6 +77,9 @@ public class UIController : BaseController<UIController>
         
     }
 
+    /// <summary>
+    /// Show dialog text for a given duration
+    /// </summary>
     private IEnumerator ShowDialog(string message, float duration)
     {
         if (!string.IsNullOrEmpty(message))
@@ -89,6 +99,9 @@ public class UIController : BaseController<UIController>
         this.dialog.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Reset UI when an Interactable object is left by the player
+    /// </summary>
     private void OnInteractableLeft(IInteractable target)
     {
         this.beehivePanel.target = null;
@@ -100,6 +113,9 @@ public class UIController : BaseController<UIController>
         this.OnUIStateChanged?.Invoke(this.state);
     }
 
+    /// <summary>
+    /// Change UI when an Interactable object is reached by the player.
+    /// </summary>
     private void OnInteractableReached(IInteractable target)
     {
         if (target is Beehive beehive)
@@ -118,9 +134,11 @@ public class UIController : BaseController<UIController>
             this.buildPanel.Init(actionElement);
         }
 
+        // Show Hexhalo around item
         this.proximityCircle.position = target.Transform.position + (Vector3.up * 0.01f);
         this.proximityCircle.gameObject.SetActive(true);
 
+        // Change UI state to adjust Cameras
         this.state |= UIState.ProximityPanel;
         this.OnUIStateChanged?.Invoke(this.state);
     }
@@ -132,6 +150,9 @@ public class UIController : BaseController<UIController>
         this.topBarBucks.text = PlayerController.Instance.Inventory.Get("buck").ToString("0");
     }
 
+    /// <summary>
+    /// Generate loot icons to show player feedback
+    /// </summary>
     public void ShowLoot(string resource, float quantity, IInteractable target)
     {
         if (target != null && quantity > 0)
