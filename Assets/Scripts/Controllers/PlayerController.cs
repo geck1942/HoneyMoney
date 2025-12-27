@@ -45,6 +45,14 @@ public class PlayerController : BaseController<PlayerController>
             
     }
 
+    public bool PlayerCanBuy(Item item, int quantity = 1)
+    {
+        if (item.priceInBucks)
+            return this.Inventory.Has("buck", item.price * quantity);
+        else
+            return this.Inventory.Has("money", item.price * quantity);
+    }
+
     // Update is called once per frame
     void Update()
     {

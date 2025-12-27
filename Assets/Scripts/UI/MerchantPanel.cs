@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 public class MerchantPanel : MonoBehaviour
@@ -9,25 +11,26 @@ public class MerchantPanel : MonoBehaviour
     public RectTransform SellContent;
     public TMPro.TextMeshProUGUI honeyText;
     public TMPro.TextMeshProUGUI sellButtonText;
-    public Button[] buyButttons;
     public Button sellButton;
+
+    public RectTransform itemsContainer;
+    private List<BuyableItemPanel> buyableItemPanels = new List<BuyableItemPanel>();
+    
     void Start()
     {
-        PlayerController.Instance.OnLoot += (resource, quantity, beehive) => Refreh();
-        
-        this.Refreh();
+        PlayerController.Instance.OnLoot += (resource, quantity, beehive) => Init(null);
     }
 
-    public void Refreh()
+    public void Init(Merchant merchant)
     {
         if (PlayerController.Instance.Inventory.Honey >= 1f)
         {
             this.SellTitle.gameObject.SetActive(true);
             this.SellContent.gameObject.SetActive(true);
-            this.honeyText.text = "Honey: <b>" + PlayerController.Instance.Inventory.Honey.ToString("0") + " x " + 
+            this.honeyText.text = "Miel: <b>" + PlayerController.Instance.Inventory.Honey.ToString("0") + " x " + 
                                   FarmController.Instance.HoneyPrice.ToString("0") + "</b>";
             float sell = PlayerController.Instance.Inventory.Honey * FarmController.Instance.HoneyPrice;
-            this.sellButtonText.text = "SELL for <b>" + sell.ToString("0") + "</b>";
+            this.sellButtonText.text = "Vendre pour <b>" + sell.ToString("0") + "</b>";
         }
         else
         {
@@ -35,11 +38,19 @@ public class MerchantPanel : MonoBehaviour
             this.SellContent.gameObject.SetActive(false);
         }
 
-        foreach (Button button in this.buyButttons)
+        for (int i = 0; i < FarmController.Instance.allItems.Count; i++)
         {
-            string strprice = button.gameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text;
-            float price = float.Parse(strprice);
-            button.interactable = PlayerController.Instance.Inventory.Money >= price;
+            BuyableItemPanel panel = null;
+            Item item =  FarmController.Instance.allItems[i];
+            if(buyableItemPanels.Count > i)
+                panel = buyableItemPanels[i];
+            else
+            {
+                panel = GameObject.Instantiate(UIController.Instance.itemShopPrefab, this.itemsContainer);
+                buyableItemPanels.Add(panel);
+            }
+            panel.Init(FarmController.Instance.allItems[i]);
+            panel.gameObject.SetActive(item.IsPurchasable());
         }
     }
 
@@ -58,8 +69,5 @@ public class MerchantPanel : MonoBehaviour
             .GetComponentInChildren<TMPro.TextMeshProUGUI>().text;
         float price = float.Parse(strprice);
 
-        PlayerController.Instance.Loot("money", -price, FarmController.Instance.merchant);
-        PlayerController.Instance.Loot(itemname, 1, FarmController.Instance.merchant);
-    
     }
 }

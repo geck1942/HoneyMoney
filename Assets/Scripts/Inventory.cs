@@ -32,15 +32,17 @@ public class Inventory
         return increased;
     }
 
+    public float Get(Item item) => Get(item.itemName);
     public float Get(string key)
     {
         return _inventory.ContainsKey(key) ? _inventory[key] : 0;
     }
 
-    public bool Has(string key, float value)
+    public bool Has(Item item, float quantity) => Has(item.itemName, quantity);
+    public bool Has(string key, float quantity)
     {
         if (_inventory.ContainsKey(key))
-            return _inventory[key] >= value;
+            return _inventory[key] >= quantity;
         return false;
     }
 }

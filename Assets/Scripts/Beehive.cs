@@ -14,7 +14,7 @@ public class Beehive : MonoBehaviour, IInteractable
     public int level = 1;
     
     public Transform Transform => this.transform;
-    public float InteractionDistance => 1.5f;
+    public float InteractionDistance => 2.5f;
   
     void Start()
     {
@@ -80,5 +80,15 @@ public class Beehive : MonoBehaviour, IInteractable
         
         this.honey -= quantity;
         return quantity;
+    }
+
+    public void Upgrade()
+    {
+        if (this.level == 1)
+        {
+            this.level = 2;
+            this.honeyCapacity = 5f;
+            this.processingSpeed = 0.2f;
+        }
     }
 }

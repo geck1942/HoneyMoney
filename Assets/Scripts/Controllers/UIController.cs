@@ -10,15 +10,19 @@ public class UIController : BaseController<UIController>
     public InventoryPanel inventoryPanel;
     public HivesPanel hivesPanel;
     public ShopPanel shopPanel;
+    public TMPro.TextMeshProUGUI topBarHoney;
     public TMPro.TextMeshProUGUI topBarMoney;
     public TMPro.TextMeshProUGUI topBarBucks;
     
     public BeehivePanel beehivePanel;
     public MerchantPanel merchantPanel;
+    public BuildPanel buildPanel;
     
     public Transform proximityCircle;
     public GameObject lootHoneyPrefab;
     public GameObject lootMoneyPrefab;
+    public BuyableItemPanel itemShopPrefab;
+    public NeededItemPanel neededItemPrefab;
 
     public RectTransform dialog;
     public TMPro.TextMeshProUGUI dialogText;
@@ -90,6 +94,7 @@ public class UIController : BaseController<UIController>
         this.beehivePanel.target = null;
         this.beehivePanel.gameObject.SetActive(false);
         this.merchantPanel.gameObject.SetActive(false);
+        this.buildPanel.gameObject.SetActive(false);
         this.proximityCircle.gameObject.SetActive(false);
         this.state &= ~UIState.ProximityPanel;
         this.OnUIStateChanged?.Invoke(this.state);
@@ -105,6 +110,12 @@ public class UIController : BaseController<UIController>
         else if (target is Merchant merchant)
         {
             this.merchantPanel.gameObject.SetActive(true);
+            this.merchantPanel.Init(merchant);
+        }
+        else if (target is BuildElement actionElement)
+        {
+            this.buildPanel.gameObject.SetActive(true);
+            this.buildPanel.Init(actionElement);
         }
 
         this.proximityCircle.position = target.Transform.position + (Vector3.up * 0.01f);
@@ -116,7 +127,9 @@ public class UIController : BaseController<UIController>
 
     public void RefreshTopBar()
     {
-        this.topBarMoney.text = PlayerController.Instance.Inventory.Money.ToString(("0") + "$");
+        this.topBarHoney.text = PlayerController.Instance.Inventory.Honey.ToString("0");
+        this.topBarMoney.text = PlayerController.Instance.Inventory.Money.ToString("0");
+        this.topBarBucks.text = PlayerController.Instance.Inventory.Get("buck").ToString("0");
     }
 
     public void ShowLoot(string resource, float quantity, IInteractable target)

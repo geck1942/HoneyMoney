@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626986ed7b5640598eb91d26ca9daf0b, type: 3}
+  m_Name: strawberry
+  m_EditorClassIdentifier: 
+  itemName: strawberry
+  itemTitle: Fraisier
+  icon: {fileID: -205597094, guid: d3acda5d9507d25418ff23ab810f7e16, type: 3}
+  price: 15
+  buyableAt: 11
+  canBeBought: 1
+  priceInBucks: 0

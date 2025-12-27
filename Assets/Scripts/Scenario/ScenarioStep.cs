@@ -21,18 +21,28 @@
         public float EndAfterDelay = 0f;
         public float EndAfterLootedQuantity = 0;
         public string EndAfterLootedItemName = "";
+        public List<BuildElement> EndAfterBuilds = new List<BuildElement>();
         
         private Coroutine waitAndShowHelpCoroutine = null;
         
         void Start()
         {
             this.HideItems();
-            
         }
-        
+
+        private void FarmBuild(BuildElement element)
+        {
+            if (EndAfterBuilds.Count > 0 && EndAfterBuilds.All(element => element == null || element.isDone))
+            {
+                ScenarioController.Instance.GoToNextStep();
+            }
+        }
+
         public virtual void Begin()
         {
             PlayerController.Instance.OnLoot += PlayerLoot;
+            FarmController.Instance.OnBuild += FarmBuild;
+
             this.waitAndShowHelpCoroutine = StartCoroutine(this.ShowItems());
             Debug.Log(this.message);
 
@@ -41,13 +51,16 @@
             
             if(this.freezePlayer)
                 PlayerController.Instance.player.characterController.enabled = false;
+
+
         }
 
 
         public virtual void End()
         {
             PlayerController.Instance.OnLoot -= PlayerLoot;
-            
+            FarmController.Instance.OnBuild -= FarmBuild;
+
             if(this.waitAndShowHelpCoroutine != null)
                 StopCoroutine(this.waitAndShowHelpCoroutine);
             this.HideItems();

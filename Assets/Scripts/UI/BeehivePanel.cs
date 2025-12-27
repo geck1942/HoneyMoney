@@ -14,6 +14,7 @@ public class BeehivePanel : MonoBehaviour
     public TMPro.TextMeshProUGUI beeProgressText;
     public TMPro.TextMeshProUGUI beeCountText;
     public List<Slider> honeySliders;
+    public Button upgradeButton;
     
     void Start()
     {
@@ -43,6 +44,24 @@ public class BeehivePanel : MonoBehaviour
                 else
                     slider.value = this.target.honey - h + 1;
             }
+
+            // only level 2 available
+            upgradeButton.gameObject.SetActive(target.level == 1);
+            upgradeButton.interactable = PlayerController.Instance.Inventory.Money >= 30;
+
+            // Fake information
+            if (this.target.level > 1)
+                beeCountText.text = "4/4";
+            else
+                beeCountText.text = "3/3";
+            
+            
         }
+    }
+
+    public void ClickUpgrade()
+    {
+        PlayerController.Instance.Loot("money", -30);
+        this.target.Upgrade();
     }
 }
